@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ノート共有ページ</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <a href="/" class="btn btn-secondary mb-4">← ホームに戻る</a>
+
+        <h1 class="mb-4">ノート投稿フォーム</h1>
+        <form action="/upload" method="POST" enctype="multipart/form-data" class="mb-5 border p-4 bg-white rounded shadow-sm">
+            <div class="mb-3">
+                <label class="form-label">授業名</label>
+                <input type="text" name="class" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">ノートファイル（.txtなど）</label>
+                <input type="file" name="note" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">アップロード</button>
+        </form>
+
+        <form method="GET" action="/notes" class="mb-4">
+            <label class="form-label">授業名で検索:</label>
+            <input type="text" name="class" value="{{ keyword }}" class="form-control" placeholder="例: 数学, 英語など">
+            <button type="submit" class="btn btn-outline-primary mt-2">検索</button>
+        </form>
+
+        <h2>アップロードされたノート一覧</h2>
+        <div class="list-group">
+            {% for file in files %}
+                <div class="list-group-item bg-white mb-2 shadow-sm rounded">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <a href="/uploads/{{ file }}" target="_blank" class="fw-bold">{{ file }}</a>
+                            <span class="badge bg-secondary ms-2">いいね数: {{ likes.get(file, 0) }}</span>
+                            <span class="text-muted ms-2">（授業: {{ notes.get(file, '不明') }}）</span>
+                        </div>
+                        <form action="/like/{{ file }}" method="POST" class="ms-3">
+                            <button type="submit" class="btn btn-outline-success btn-sm">いいね！</button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

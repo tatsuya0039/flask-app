@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{{ subject }} の口コミ</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .star { color: gold; }
+    </style>
+</head>
+<body class="bg-light">
+<div class="container mt-5" style="max-width: 800px;">
+    <h2 class="mb-4">📚 {{ subject }} の口コミ</h2>
+
+    {% if avg %}
+        <p><strong>平均おすすめ度:</strong>
+            <span class="star">
+                {% for i in range(avg|round(0, 'floor')) %}★{% endfor %}
+                {% for i in range(5 - avg|round(0, 'floor')) %}☆{% endfor %}
+            </span>（{{ avg }}）
+        </p>
+    {% else %}
+        <p class="text-muted">まだ口コミがありません。</p>
+    {% endif %}
+
+    <hr>
+
+    {% for review in reviews %}
+        <div class="border rounded p-3 mb-3 bg-white shadow-sm">
+            <p><strong>{{ review.username }}</strong></p>
+            <p class="star">
+                {% for i in range(review.rating) %}★{% endfor %}
+                {% for i in range(5 - review.rating) %}☆{% endfor %}
+            </p>
+            <p>{{ review.comment }}</p>
+        </div>
+    {% endfor %}
+
+    <a href="/subjects" class="btn btn-secondary mt-3">← 授業一覧に戻る</a>
+</div>
+</body>
+</html>
