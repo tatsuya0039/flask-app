@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ノート投稿</title>
+</head>
+<body>
+    <h1>ノート投稿フォーム</h1>
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+        授業名: <input type="text" name="class" required><br><br>
+        ノートファイル: <input type="file" name="note" required><br><br>
+        <input type="submit" value="アップロード">
+    </form>
+</body>
+</html>
